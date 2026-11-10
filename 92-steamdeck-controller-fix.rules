@@ -1,0 +1,5 @@
+# Wake the one-shot reconciler on input device add/removal.
+# Scanning (rather than relying on remove-event ID_INPUT_JOYSTICK) is intentional.
+# Input events from built-in controls may trigger this too, but reconciliation
+# is idempotent and cannot unbind a device unless its USB IDs are verified.
+ACTION=="add|remove", SUBSYSTEM=="input", KERNEL=="event*", RUN+="/usr/bin/systemctl --no-block start steamdeck-controller-fix.service"

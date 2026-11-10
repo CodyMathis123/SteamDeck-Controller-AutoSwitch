@@ -1,0 +1,11 @@
+[Unit]
+Description=Recover from missed Bluetooth controller events on Steam Deck
+
+[Timer]
+OnBootSec=15s
+OnUnitInactiveSec=30s
+AccuracySec=3s
+Unit=steamdeck-controller-fix.service
+
+[Install]
+WantedBy=timers.target

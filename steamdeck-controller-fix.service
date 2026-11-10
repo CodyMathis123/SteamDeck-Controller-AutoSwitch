@@ -1,0 +1,14 @@
+[Unit]
+Description=Reconcile Steam Deck internal controller with Bluetooth gamepads
+After=systemd-udevd.service
+
+[Service]
+Type=oneshot
+# Stable journal identifier; filter out systemd start/stop chatter with journalctl -t.
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=steamdeck-controller-fix
+# Allow input devices and udev classification to settle after add/remove.
+ExecStartPre=/usr/bin/sleep 0.8
+ExecStart=/usr/bin/python3 /etc/steamdeck-controller-fix/controller_fix.py reconcile
+TimeoutStartSec=15s

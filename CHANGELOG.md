@@ -1,0 +1,16 @@
+# Changelog
+
+## 0.2.0 — 2026-11-09
+
+- Repository publication under the name SteamDeck-Controller-AutoSwitch, with PolyForm Noncommercial License 1.0.0 (replacing the initial draft MIT license).
+
+- Event-oriented controller logging (connections, disconnections, real HID changes, errors, manual recovery) without unchanged-poll messages from Python; a dedicated journal identifier filters out systemd service-lifecycle chatter.
+- Tiny atomic state snapshot in volatile `/run`, rather than writing history to the SSD.
+- Recognized in-place upgrades with `install.sh` (no uninstall needed); preflight still runs first.
+- New installations no longer opt into custom SteamOS update keep-lists by default; existing keep-list choice is preserved. Explicit `--persist-updates` and `--no-persist-updates` flags added.
+- Added rollback-to-safe-state attempt if service activation fails, cleanup of runtime cache on uninstall, more tests, CI, and release packaging.
+- Added architecture, troubleshooting, contribution, and safety documentation.
+
+## 0.1.0 — 2026-11-08
+
+- Initial USB HID handoff via Bluetooth gamepad detection, udev/systemd event hook, 30-second fallback timer, read-only preflight, manual restoration, and uninstaller.
