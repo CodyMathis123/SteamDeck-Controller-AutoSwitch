@@ -94,9 +94,9 @@ printf '%s\\n' "$*" >> "$MOCK_DOCTOR_LOG"
         self.assertFalse(list(self.base.glob("steamdeck-autoswitch.*")))
 
     def test_pinned_version_uses_tag_asset_url(self):
-        result = self.run_script(STEAMDECK_AUTOSWITCH_VERSION="v0.3.0")
+        result = self.run_script(STEAMDECK_AUTOSWITCH_VERSION="v0.3.1")
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("releases/download/v0.3.0", self.curl_log.read_text())
+        self.assertIn("releases/download/v0.3.1", self.curl_log.read_text())
 
     def test_mismatched_archive_fails_before_privileges(self):
         (self.release / "SHA256SUMS").write_text(

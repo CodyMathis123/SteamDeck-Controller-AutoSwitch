@@ -13,4 +13,4 @@ This tool intentionally operates at the Linux kernel driver level. Changes to de
 
 Hardware validation should include: initial boot with and without Bluetooth controller, connect, disconnect, two controllers connected, manual restore, SteamOS sleep/wake, and uninstall. A successful simulated test does not imply physical hardware validation.
 
-Contributions are welcome for noncommercial use under the project's [PolyForm Noncommercial License 1.0.0](LICENSE). By submitting a contribution, you agree to license that contribution under the same terms. Do not submit code you do not have rights to license.
+Contributions are welcome under the project's [MIT License](LICENSE). By submitting a contribution, you agree to license that contribution under MIT and confirm you have the rights to do so. Do not submit code you do not have rights to license.

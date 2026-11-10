@@ -15,7 +15,7 @@ SteamDeck-Controller-AutoSwitch remote installer
 Usage: curl -fsSL https://raw.githubusercontent.com/CodyMathis123/SteamDeck-Controller-AutoSwitch/Production/scripts/install-remote.sh | bash
 
 Optional:
-  STEAMDECK_AUTOSWITCH_VERSION=v0.3.0  Pin to one released version
+  STEAMDECK_AUTOSWITCH_VERSION=v0.3.1  Pin to one released version
   bash install-remote.sh --no-persist-updates  Remove this project's SteamOS keep-list
   bash install-remote.sh --persist-updates     Opt into SteamOS update keep-list (see README caveat)
 

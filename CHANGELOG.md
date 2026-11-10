@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 — 2026-11-10
+
+- Relicensed current project sources and new release artifacts under the MIT License (Copyright 2026 Cody Mathis).
+- Updated README, contribution terms, and installer examples to reflect MIT and the new release.
+- Existing v0.3.0 and earlier release artifacts are unchanged and still include their original PolyForm Noncommercial license terms.
+
 ## 0.3.0 — 2026-11-10
 
 - Added one-command Steam Deck installation and upgrades via official GitHub Release assets.

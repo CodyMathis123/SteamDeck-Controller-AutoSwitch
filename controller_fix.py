@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 LOG = logging.getLogger("steamdeck-controller-fix")
-VERSION = "0.3.0"
+VERSION = "0.3.1"
 DECK_VENDOR, DECK_PRODUCT = "28de", "1205"
 # Known Steam Deck internal controller HID interfaces. We check the *USB parent*
 # VID/PID and each interface class before touching the driver's bind/unbind API.

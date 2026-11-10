@@ -16,7 +16,7 @@ curl -fsSL https://raw.githubusercontent.com/CodyMathis123/SteamDeck-Controller-
 
 The bootstrap downloads the **latest published GitHub Release** ZIP and `SHA256SUMS`, verifies the ZIP with SHA-256, runs a **read-only hardware preflight**, then uses `sudo` to install or upgrade. It performs network downloads **before** privilege escalation, temporarily extracts under `/tmp`, and cleans up afterward. It does not replace unrelated controller-disabling tools or disable Steam Input globally.
 
-- Install a particular released version: `curl -fsSL https://raw.githubusercontent.com/CodyMathis123/SteamDeck-Controller-AutoSwitch/Production/scripts/install-remote.sh | STEAMDECK_AUTOSWITCH_VERSION=v0.3.0 bash`
+- Install a particular released version: `curl -fsSL https://raw.githubusercontent.com/CodyMathis123/SteamDeck-Controller-AutoSwitch/Production/scripts/install-remote.sh | STEAMDECK_AUTOSWITCH_VERSION=v0.3.1 bash`
 - For an older install with a SteamOS update keep-list, remove it using: `curl -fsSL https://raw.githubusercontent.com/CodyMathis123/SteamDeck-Controller-AutoSwitch/Production/scripts/install-remote.sh | bash -s -- --no-persist-updates`
 - For those who prefer to inspect downloaded scripts before execution, open [the bootstrap source](scripts/install-remote.sh) or download it first and run it after inspection.
 
@@ -161,8 +161,8 @@ Inspired by [scawp/Steam-Deck.Auto-Disable-Steam-Controller](https://github.com/
 
 ## License
 
-Source-available under the **[PolyForm Noncommercial License 1.0.0](LICENSE)**.
+Licensed under the **[MIT License](LICENSE)** (starting with **v0.3.1**).
 
-You may download, run, inspect, modify, and redistribute the source and modified versions **for noncommercial purposes**, so long as you comply with the license and retain the required notice. **Selling this software or otherwise using it commercially is not permitted** without a separate license from the copyright holder. This restriction also applies to commercial *use*, not merely paid resale. It is **not an OSI-approved open-source license**.
+You may use, copy, modify, redistribute, and sell the software, including for commercial purposes, provided you include the copyright and license notice in copies or substantial portions. You do **not** have to publish modifications or distribute source code.
 
-The full [LICENSE](LICENSE) controls if this summary differs. For permission for a commercial use case, contact the repository owner via GitHub.
+Earlier published releases (including v0.3.0) retain the PolyForm Noncommercial license text included in those release archives. Those existing artifacts are not changed by this relicensing. See [releases](https://github.com/CodyMathis123/SteamDeck-Controller-AutoSwitch/releases).
