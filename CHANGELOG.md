@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0 — 2026-11-10
+
+- Added one-command Steam Deck installation and upgrades via official GitHub Release assets.
+- Bootstrap downloads as unprivileged user, checks ZIP against a SHA-256 manifest, verifies hardware before using sudo, and cleans temporary files.
+- Added automated release workflow that runs tests and publishes tagged, immutable ZIP and SHA256SUMS artifacts on a new version in Production.
+- Added offline bootstrap tests and installation/security documentation.
+
 ## 0.2.0 — 2026-11-09
 
 - Repository publication under the name SteamDeck-Controller-AutoSwitch, with PolyForm Noncommercial License 1.0.0 (replacing the initial draft MIT license).

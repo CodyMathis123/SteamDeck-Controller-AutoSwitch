@@ -1,0 +1,84 @@
+name: Release
+
+on:
+  push:
+    branches: [Production]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Never race two release runs for the same immutable version tag.
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/Production'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Get release version and skip previously tagged releases
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(python3 - <<'PY'
+          import ast
+          import re
+          from pathlib import Path
+          tree = ast.parse(Path('controller_fix.py').read_text(encoding='utf-8'))
+          matches = [node.value.value for node in tree.body
+                     if isinstance(node, ast.Assign)
+                     and any(isinstance(target, ast.Name) and target.id == 'VERSION'
+                             for target in node.targets)
+                     and isinstance(node.value, ast.Constant)
+                     and isinstance(node.value.value, str)]
+          if len(matches) != 1 or not re.fullmatch(r'\d+\.\d+\.\d+', matches[0]):
+              raise SystemExit('VERSION must be a single X.Y.Z string')
+          print(matches[0])
+          PY
+          )
+          tag="v${version}"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/$tag" >/dev/null || gh release view "$tag" >/dev/null 2>&1; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "Release $tag already exists; refusing to overwrite immutable artifacts."
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run tests and syntax checks
+        if: steps.release.outputs.publish == 'true'
+        run: |
+          python3 -m compileall -q controller_fix.py tests
+          python3 -m unittest discover -s tests -v
+          bash -n install.sh uninstall.sh scripts/install-remote.sh
+      - name: Build release ZIP and SHA-256 manifest
+        if: steps.release.outputs.publish == 'true'
+        run: |
+          python3 scripts/package.py --output dist/steamdeck-controller-fix.zip
+          unzip -t dist/steamdeck-controller-fix.zip
+          (cd dist && sha256sum steamdeck-controller-fix.zip > SHA256SUMS && sha256sum -c SHA256SUMS)
+      - name: Create release tag
+        if: steps.release.outputs.publish == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git tag -a '${{ steps.release.outputs.tag }}' -m 'Steam Deck Controller AutoSwitch ${{ steps.release.outputs.tag }}'
+          git push origin '${{ steps.release.outputs.tag }}'
+      - name: Publish GitHub Release
+        if: steps.release.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create '${{ steps.release.outputs.tag }}' \
+            dist/steamdeck-controller-fix.zip dist/SHA256SUMS \
+            --verify-tag \
+            --title 'Steam Deck Controller AutoSwitch ${{ steps.release.outputs.tag }}' \
+            --generate-notes

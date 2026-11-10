@@ -6,7 +6,25 @@ Works without a Python background daemon, third-party Python packages, or change
 
 > **Hardware-specific software:** This currently supports the Steam Deck controller USB device `28de:1205` with its three expected HID interfaces. Other device layouts intentionally fail the preflight check. Keep SSH or a keyboard available for the first installation and any upgrade.
 
-## Install or upgrade
+## One-line install / upgrade (Steam Deck Konsole)
+
+Copy/paste this command **on the Steam Deck** (Desktop Mode, Konsole):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/CodyMathis123/SteamDeck-Controller-AutoSwitch/Production/scripts/install-remote.sh | bash
+```
+
+The bootstrap downloads the **latest published GitHub Release** ZIP and `SHA256SUMS`, verifies the ZIP with SHA-256, runs a **read-only hardware preflight**, then uses `sudo` to install or upgrade. It performs network downloads **before** privilege escalation, temporarily extracts under `/tmp`, and cleans up afterward. It does not replace unrelated controller-disabling tools or disable Steam Input globally.
+
+- Install a particular released version: `curl -fsSL https://raw.githubusercontent.com/CodyMathis123/SteamDeck-Controller-AutoSwitch/Production/scripts/install-remote.sh | STEAMDECK_AUTOSWITCH_VERSION=v0.3.0 bash`
+- For an older install with a SteamOS update keep-list, remove it using: `curl -fsSL https://raw.githubusercontent.com/CodyMathis123/SteamDeck-Controller-AutoSwitch/Production/scripts/install-remote.sh | bash -s -- --no-persist-updates`
+- For those who prefer to inspect downloaded scripts before execution, open [the bootstrap source](scripts/install-remote.sh) or download it first and run it after inspection.
+
+**Security note:** SHA-256 detects corruption or mismatches between the downloaded files; it is **not** independent cryptographic proof of publisher identity because the ZIP and checksum are hosted together. Running any remote shell script requires trusting the repository and HTTPS delivery. The installer will require a `sudo` password, and SSH/keyboard recovery is recommended for the first run.
+
+**Release process:** GitHub Actions runs tests and creates a versioned GitHub Release on a new `VERSION` in `controller_fix.py` pushed to `Production`. Release files are `steamdeck-controller-fix.zip` and `SHA256SUMS`. Already tagged versions are not overwritten. [View releases](https://github.com/CodyMathis123/SteamDeck-Controller-AutoSwitch/releases).
+
+## Manual install or upgrade
 
 Copy/extract the project to the Deck (for example `/home/deck/steamdeck-controller-fix`), switch to Desktop Mode, and run:
 

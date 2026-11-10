@@ -24,6 +24,9 @@ INCLUDE = (
     "docs/architecture.md",
     "tests/test_controller_fix.py",
     "scripts/package.py",
+    "scripts/install-remote.sh",
+    ".github/workflows/release.yml",
+    "tests/test_bootstrap.py",
 )
 
 
